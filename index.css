@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'watermelon_script_demoregular';
+    src: url('./media/webfontkit-20190213-212018/watermelon_script_demo-webfont.woff2') format('woff2'),
+         url('./media/webfontkit-20190213-212018/watermelon_script_demo-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    /* justify-content:center; */
+    text-align: center;
+    background-color: lightpink;
+    box-shadow: 5px 5px 5px #888888;
+}
+
+.header p{
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+    /* text-align: center; */
+    font-family: 'watermelon_script_demoregular';
+    font-size: 40px;
+    display:inline-block;
+    position: relative;
+    margin: 25px;
+}
+
+.header p img{
+    /* float:left; */
+    /* height: 135px; */
+    height: 75px;
+    width: 110px;
+    /* width: 225px; */
+}
