@@ -13,7 +13,14 @@
         <header class="header">
             <p> <img src="./media/foodpic.png" align="center"> Yum On The Run</p>
         </header>
-        
-
+        <div id="map-input">
+            <input type="text" placeholder="Search for address"></input>
+            <button id="submit-btn" type="submit">Search</button>
+        </div>
+        <div class="map-results">
+            <div id="map"></div>
+            <div id="results"></div>
+        </div>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZKpHihs4-OLgP4pdxRpyTKKTeVTVm2OY&libraries=places&callback=init"></script>
     </body>
 </html>

@@ -6,7 +6,7 @@
     font-style: normal;
 }
 
-@keyframes slideInFromLeft {
+@keyframes slideInFromLeft{
     0% {
         transform: translateX(-100%);
     }
@@ -21,26 +21,60 @@ html, body{
 }
 
 .header{
-    /* justify-content:center; */
     text-align: center;
-    background-color: lightpink;
-    box-shadow: 5px 5px 5px #888888;
 }
 
 .header p{
     animation: 1s ease-out 0s 1 slideInFromLeft;
-    /* text-align: center; */
     font-family: 'watermelon_script_demoregular';
-    font-size: 40px;
+    font-size: 50px;
     display:inline-block;
     position: relative;
     margin: 25px;
+    text-shadow: 5px 5px 5px #888888;
 }
 
 .header p img{
-    /* float:left; */
-    /* height: 135px; */
     height: 75px;
     width: 110px;
-    /* width: 225px; */
+}
+
+.map-results{
+    position:relative;
+    width:100%;
+    display: flex;
+}
+
+#map{
+    height:500px;
+    width:75%;
+    background-color:grey;
+    float:left;
+    margin:10px;
+}
+
+#results{
+    border: 1px solid black;
+    height: 500px;
+    float:right;
+    width:30%;
+    margin:10px;
+}
+
+#map-input{
+    width:70%;
+    height:40px;
+    margin:10px;
+}
+
+#map-input input{
+    height:40px;
+    width:65%;
+    border: 1px solid black;
+}
+
+#submit-btn{
+    width:10%;
+    height:40px;
+    border: 1px solid black;
 }
