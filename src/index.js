@@ -7,6 +7,7 @@ let trucks = {
     '10': [], 
     '15': []
 }
+let results = 20
 
 // on load, checks localStorage for address
 // default position: downtown San Francisco 
@@ -110,7 +111,10 @@ function getTruckDistance(truck){
 
 function showTruckResults(){
     trucks[locationFilter].sort(compareTruckDistance)
-    console.log(trucks[locationFilter])
+    for(let i = 0; i <= results; i++){
+        showTruck(trucks[locationFilter][i])
+    }
+    // console.log(trucks[locationFilter])
 }
 
 // compare truck distances
@@ -123,12 +127,14 @@ function compareTruckDistance(truck1, truck2){
         comparison = -1 
     }
     return comparison
-    console.log(comparison)
 }
 
 function showTruck(truck){
     let truckList = document.getElementById('truck-list')
-    
+    truckList.innerHTML += `<li id=${truck.objectid} class="truck-info">
+    <h3>${truck.applicant}</h3>
+    </li>`
+    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]})
 }
 
 

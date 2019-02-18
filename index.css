@@ -63,6 +63,7 @@ html, body{
     width:30%;
     margin-right:100px;
     margin-top:50px;
+    padding:0;
     display:flex;
     left:64%;
     position:absolute;
@@ -101,4 +102,18 @@ button{
     overflow:hidden;
     background-image: url('./media/geolocalize.png');
     background-size:100%;
+}
+
+#truck-list{
+    background-color:white;
+    overflow:scroll;
+    list-style:none;
+    position:inside;
+    padding: 0;
+    /* display:inline; */
+}
+
+.truck-info{
+    border: 0.5px solid black;
+    padding-left: 5px;
 }
