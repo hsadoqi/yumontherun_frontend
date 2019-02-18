@@ -1,12 +1,7 @@
 const truckAPI = `https://data.sfgov.org/resource/6a9r-agq8.json`
 let map
 let userLocation = {lat: 37.7946, lng: -122.3999}
-let locationFilter = '5'
-let trucks = { 
-    '5': [],
-    '10': [], 
-    '15': []
-}
+let trucks = []
 let results = 20
 
 // on load, checks localStorage for address
@@ -30,18 +25,23 @@ function geolocalizeUser(){
         function (position) {
          let userAddress = JSON.stringify({lat: position.coords.latitude, lng: position.coords.longitude})
          localStorage.setItem('address', userAddress)
-         userLocation = JSON.parse(userAddress)
-         loadMap(userLocation)
+         init()
         });
 }
 
 // handles event listeners on app
 
 document.addEventListener('click', (e) => {
+    e.preventDefault()
     if(e.target.id === 'submit-btn'){
         geocodeAddress(e)
     } else if(e.target.id === 'find-btn'){
         geolocalizeUser()
+    } else if(e.target.className === 'truck-item'){
+        let truckId = e.target.dataset.id
+        displayTruckInfo(truckId)
+    } else if(e.target.id === 'load-more'){
+        loadMoreResults()
     }
 })
 
@@ -55,7 +55,8 @@ function geocodeAddress(e){
         if (status === 'OK') {
             userLocation = results[0].geometry.location
             map.setCenter(userLocation)
-            loadMap(userLocation)
+            localStorage.setItem('address', JSON.stringify(userLocation))
+            init()
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -66,20 +67,35 @@ function geocodeAddress(e){
 
 function loadMap(userLocation){
     map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: userLocation});
-    createMarker(userLocation)
+    createMarker(userLocation, {title: 'Your Location', id: null})
+    trucks = []
+    results = 20
     fetchAllTrucks()
 }
 
 // creates map marker
 
-function createMarker(position){
-    new google.maps.Marker({map: map, position: position})
+function createMarker(position, options){
+    let marker = new google.maps.Marker({map: map, position: position, title: options['title'], id: options['id']})
+    let infowindow = new google.maps.InfoWindow({ content: options["title"]})
+
+    if(options['id'] === null){
+        infowindow.open(map, marker)
+    }
+
+    marker.addListener('click', () => {
+        if(marker.id !== null){
+            displayTruckInfo(marker.id)
+            infowindow.open(map, marker)
+            setTimeout(() => {infowindow.close()}, '2000');
+        }
+    })
 }
 
 // fetch all trucks in api
 
-async function fetchAllTrucks(){
-    await fetch(truckAPI)
+function fetchAllTrucks(){
+    fetch(truckAPI)
     .then(res => res.json())
     .then(trucks => {
         trucks.forEach(truck => {
@@ -87,8 +103,15 @@ async function fetchAllTrucks(){
                 getTruckDistance(truck)
             }
         })
+    }).then(() => {
+        if(trucks.length !== 0){
+            showTruckResults()
+        } else {
+            let truckList = document.getElementById('truck-list')
+            truckList.innerHTML = ''
+            alert('there are no trucks nearby, please choose a different address')
+        }
     })
-    showTruckResults()
 }
 
 // get distance between user & truck, store truck information
@@ -97,24 +120,22 @@ function getTruckDistance(truck){
     let truckLocation = new google.maps.LatLng(truck.location.coordinates[1], truck.location.coordinates[0])
     let newUserLocation = new google.maps.LatLng(userLocation["lat"], userLocation["lng"])
     let distance = google.maps.geometry.spherical.computeDistanceBetween(truckLocation, newUserLocation);
+
     truck.distanceFromUser = distance
-    if(distance <= 8000){
-        trucks['5'].push(truck)
-    } else if(distance <= 16000 && distance > 8000){
-        trucks['10'].push(truck)
-    } else if(distance <= 24000 && distance > 16000){
-        trucks['15'].push(truck)
-    }
+    trucks.push(truck)
 }
 
 // sort trucks in object based on set filter 
 
 function showTruckResults(){
-    trucks[locationFilter].sort(compareTruckDistance)
+    let truckList = document.getElementById('truck-list')
+    truckList.innerHTML = ''
+
+    trucks.sort(compareTruckDistance)
+
     for(let i = 0; i <= results; i++){
-        showTruck(trucks[locationFilter][i])
+        truckList.innerHTML += showTruck(trucks[i])
     }
-    // console.log(trucks[locationFilter])
 }
 
 // compare truck distances
@@ -129,14 +150,37 @@ function compareTruckDistance(truck1, truck2){
     return comparison
 }
 
+// display each truck's info on the results div
+
 function showTruck(truck){
-    let truckList = document.getElementById('truck-list')
-    truckList.innerHTML += `<li id=${truck.objectid} class="truck-info">
-    <h3>${truck.applicant}</h3>
+    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]}, {title: truck.applicant, id: truck.objectid})
+
+    return `<li data-id=${truck.objectid} class="truck-item">
+    ${truck.applicant}<br><br>
+    ${truck.address}<br><br>
+    ${truck.fooditems}
     </li>`
-    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]})
+    
 }
 
+// display more info for truck if selected & link to get directions to truck directly
+
+function displayTruckInfo(truckId){
+    let foundTruck = trucks.find(truck => truck.objectid === truckId)
+    let truckInfo = document.getElementById('truck-info')
+
+    truckInfo.innerHTML = `<h3>${foundTruck.applicant}</h3>
+    <p>${foundTruck.address}</p>
+    <a href="https://www.google.com/maps/search/?api=1&query=${foundTruck.location.coordinates[1]},${foundTruck.location.coordinates[0]}">Get Directions</a>
+    <p>${foundTruck.fooditems}</p>
+    `
+    window.scrollTo(0, document.body.scrollHeight)
+}
+
+function loadMoreResults(){
+    results += 10 
+    showTruckResults()
+}
 
 
 
