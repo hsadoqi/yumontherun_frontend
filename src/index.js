@@ -68,8 +68,10 @@ function geocodeAddress(e){
 function loadMap(userLocation){
     map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: userLocation});
     createMarker(userLocation, {title: 'Your Location', id: null})
+
     trucks = []
     results = 20
+    
     fetchAllTrucks()
 }
 
@@ -125,7 +127,7 @@ function getTruckDistance(truck){
     trucks.push(truck)
 }
 
-// sort trucks in object based on set filter 
+// sort trucks in object & render truck info in list
 
 function showTruckResults(){
     let truckList = document.getElementById('truck-list')
@@ -136,6 +138,14 @@ function showTruckResults(){
     for(let i = 0; i <= results; i++){
         truckList.innerHTML += showTruck(trucks[i])
     }
+
+    let truckResults = document.getElementById('results')
+
+    truckResults.addEventListener('wheel', (e) => {
+        if(truckResults.scrollTop === truckResults.scrollHeight - truckResults.clientHeight){
+            loadMoreResults()
+        }
+    })
 }
 
 // compare truck distances

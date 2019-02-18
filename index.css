@@ -19,7 +19,6 @@ html, body{
     margin: 0;
     padding: 0;
     height:100%;
-    /* display:flex; */
 }
 
 .header{
@@ -79,7 +78,6 @@ html, body{
     z-index:10;
     top:4%;
     left:20%;
-    /* display:flex; */
 }
 
 #map-input input{
@@ -107,19 +105,11 @@ button{
 
 #truck-list{
     background-color:white;
-    overflow:scroll;
     list-style:none;
-    position:inside;
     padding: 0px;
-    /* display:inline; */
     position:absolute;
+    margin:0;
 }
-
-#truck-list a{
-    bottom:0;
-    position:absolute;
-}
-
 
 .truck-item{
     border: 0.5px solid black;
@@ -128,8 +118,6 @@ button{
 
 .truck-item:hover{
     background-color:lightgrey;
-    /* transform:scale(1.5); */
-    /* z-index:5; */
 }
 
 .footer{
