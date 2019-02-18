@@ -1,3 +1,18 @@
+/* default style */
+
+html, body{
+    margin: 0;
+    padding: 0;
+    height:100%;
+}
+
+/* styles for the header */
+
+.header{
+    text-align: center;
+}
+/* added different font for header*/
+
 @font-face {
     font-family: 'watermelon_script_demoregular';
     src: url('./media/webfontkit-20190213-212018/watermelon_script_demo-webfont.woff2') format('woff2'),
@@ -5,6 +20,23 @@
     font-weight: normal;
     font-style: normal;
 }
+
+/* made header media responsive */
+
+@media only screen and (max-device-width: 375px) {
+    .header p{
+        font-size: 1.5em !important;
+    }
+}
+
+@media only screen and (min-device-width: 380px) and (max-device-width: 820px) {
+    .header p{
+        font-size: 1.75em !important;
+    }
+}
+
+/* animation for header */
+
 
 @keyframes slideInFromLeft{
     0% {
@@ -15,30 +47,20 @@
     }
 }
 
-html, body{
-    margin: 0;
-    padding: 0;
-    height:100%;
-}
-
-.header{
-    text-align: center;
-}
-
 .header p{
     animation: 1s ease-out 0s 1 slideInFromLeft;
     font-family: 'watermelon_script_demoregular';
-    font-size: 50px;
-    display:inline-block;
-    position: relative;
-    margin: 25px;
+    font-size: 3em;
+    margin: 1vh;
     text-shadow: 5px 5px 5px #888888;
 }
 
 .header p img{
-    height: 75px;
-    width: 110px;
+    max-width: 12vh;
 }
+
+
+/* styles for main container */
 
 .map-results{
     position:relative;
@@ -46,30 +68,18 @@ html, body{
     display: flex;
 }
 
+/* styles for map itself */
+
 #map{
     height:600px;
     width:100%;
     background-color:grey;
     float:left;
-    margin:10px;
+    /* margin:10px; */
 
 }
 
-#results{
-    border: 1px solid black;
-    height: 500px;
-    float:right;
-    width:30%;
-    margin-right:100px;
-    margin-top:50px;
-    padding:0;
-    display:flex;
-    left:64%;
-    position:absolute;
-    background-color: lightgrey;
-    z-index:10;
-    overflow:scroll;
-}
+/* styles for search bar for address */
 
 #map-input{
     width:50%;
@@ -87,6 +97,8 @@ html, body{
     text-align:center;
 }
 
+/* styles for button to geolocalize user */
+
 button{
     width:10%;
     height:40px;
@@ -102,6 +114,43 @@ button{
     background-image: url('./media/geolocalize.png');
     background-size:100%;
 }
+
+/* styles for results container */
+
+#results{
+    border: 1px solid black;
+    height: 500px;
+    float:right;
+    width:30%;
+    margin-right:100px;
+    margin-top:50px;
+    padding:0;
+    display:flex;
+    left:64%;
+    position:absolute;
+    background-color: lightgrey;
+    z-index:10;
+    overflow:scroll;
+}
+
+/* styles to search food trucks */
+
+#search-food input{
+    float:right;
+    width:30%;
+    margin-right:100px;
+    margin-top:20px;
+    padding:0;
+    display:flex;
+    left:64%;
+    position:absolute;
+    z-index:10;
+    height:30px;
+    border: 1px solid black;
+}
+
+
+/* styles for list of trucks */
 
 #truck-list{
     background-color:white;
@@ -120,20 +169,7 @@ button{
     background-color:lightgrey;
 }
 
+
 .footer{
     background-color:lightgrey
-}
-
-#search-food input{
-    float:right;
-    width:30%;
-    margin-right:100px;
-    margin-top:20px;
-    padding:0;
-    display:flex;
-    left:64%;
-    position:absolute;
-    z-index:10;
-    height:30px;
-    border: 1px solid black;
 }
