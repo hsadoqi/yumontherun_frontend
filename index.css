@@ -18,6 +18,8 @@
 html, body{
     margin: 0;
     padding: 0;
+    height:100%;
+    /* display:flex; */
 }
 
 .header{
@@ -46,11 +48,12 @@ html, body{
 }
 
 #map{
-    height:500px;
-    width:75%;
+    height:600px;
+    width:100%;
     background-color:grey;
     float:left;
     margin:10px;
+
 }
 
 #results{
@@ -58,23 +61,44 @@ html, body{
     height: 500px;
     float:right;
     width:30%;
-    margin:10px;
+    margin-right:100px;
+    margin-top:50px;
+    display:flex;
+    left:64%;
+    position:absolute;
+    background-color: lightgrey;
+    z-index:10;
 }
 
 #map-input{
-    width:70%;
+    width:50%;
     height:40px;
-    margin:10px;
+    position:absolute;
+    z-index:10;
+    top:4%;
+    left:20%;
+    /* display:flex; */
 }
 
 #map-input input{
     height:40px;
     width:65%;
     border: 1px solid black;
+    text-align:center;
 }
 
-#submit-btn{
+button{
     width:10%;
     height:40px;
     border: 1px solid black;
+}
+
+#find-btn{
+    position:absolute;
+    left: 3%;
+    bottom: 10%;
+    width:40px;
+    overflow:hidden;
+    background-image: url('./media/geolocalize.png');
+    background-size:100%;
 }
