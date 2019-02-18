@@ -33,22 +33,18 @@ function geolocalizeUser(){
 
 document.addEventListener('click', (e) => {
     e.preventDefault()
-    if(e.target.id === 'submit-btn'){
-        geocodeAddress(e)
-    } else if(e.target.id === 'find-btn'){
+    if(e.target.id === 'find-btn'){
         geolocalizeUser()
     } else if(e.target.className === 'truck-item'){
         let truckId = e.target.dataset.id
         displayTruckInfo(truckId)
-    } else if(e.target.id === 'load-more'){
-        loadMoreResults()
-    }
+    } 
 })
 
 // finds lat/long of user input & loads map
 
 function geocodeAddress(e){
-    let newAddress = e.target.previousElementSibling.value 
+    let newAddress = e.target.children[0].value 
     let geocoder = new google.maps.Geocoder()
 
     geocoder.geocode({'address': newAddress}, function(results, status) {
@@ -71,7 +67,7 @@ function loadMap(userLocation){
 
     trucks = []
     results = 20
-    
+
     fetchAllTrucks()
 }
 
@@ -107,6 +103,7 @@ function fetchAllTrucks(){
         })
     }).then(() => {
         if(trucks.length !== 0){
+            trucks.sort(compareTruckDistance)
             showTruckResults()
         } else {
             let truckList = document.getElementById('truck-list')
@@ -127,16 +124,22 @@ function getTruckDistance(truck){
     trucks.push(truck)
 }
 
-// sort trucks in object & render truck info in list
+// sort trucks in object & render info for nearby trucks
 
-function showTruckResults(){
+function showTruckResults(search = null){
     let truckList = document.getElementById('truck-list')
     truckList.innerHTML = ''
 
-    trucks.sort(compareTruckDistance)
-
-    for(let i = 0; i <= results; i++){
-        truckList.innerHTML += showTruck(trucks[i])
+    if(!search){
+        for(let i = 0; i <= results; i++){
+            truckList.innerHTML += showTruck(trucks[i])
+        }
+    } else {
+        for(let i = 0; truckList.childElementCount <= results && i < trucks.length; i ++){
+            if(trucks[i].fooditems.toLowerCase().includes(search.toLowerCase())){
+                truckList.innerHTML += showTruck(trucks[i])
+            }
+        }
     }
 
     let truckResults = document.getElementById('results')
@@ -146,6 +149,13 @@ function showTruckResults(){
             loadMoreResults()
         }
     })
+}
+
+// load more results for nearby trucks 
+
+function loadMoreResults(){
+    results += 10 
+    showTruckResults()
 }
 
 // compare truck distances
@@ -187,11 +197,19 @@ function displayTruckInfo(truckId){
     window.scrollTo(0, document.body.scrollHeight)
 }
 
-function loadMoreResults(){
-    results += 10 
-    showTruckResults()
-}
 
+document.addEventListener("submit", (e) => {
+    e.preventDefault()
+    if(e.target.id === 'map-input'){
+        geocodeAddress(e)
+    } 
+})
+
+document.addEventListener('input', (e) => {
+    if(e.target.parentElement.id === 'search-food'){
+        showTruckResults(e.target.value)
+    }
+})
 
 
 

@@ -123,3 +123,17 @@ button{
 .footer{
     background-color:lightgrey
 }
+
+#search-food input{
+    float:right;
+    width:30%;
+    margin-right:100px;
+    margin-top:20px;
+    padding:0;
+    display:flex;
+    left:64%;
+    position:absolute;
+    z-index:10;
+    height:30px;
+    border: 1px solid black;
+}
