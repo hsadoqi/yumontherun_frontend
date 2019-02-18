@@ -1,7 +1,12 @@
 const truckAPI = `https://data.sfgov.org/resource/6a9r-agq8.json`
 let map
 let userLocation = {lat: 37.7946, lng: -122.3999}
-let locationFilter
+let locationFilter = '5'
+let trucks = { 
+    '5': [],
+    '10': [], 
+    '15': []
+}
 
 // on load, checks localStorage for address
 // default position: downtown San Francisco 
@@ -72,31 +77,60 @@ function createMarker(position){
 
 // fetch all trucks in api
 
-function fetchAllTrucks(){
-    fetch(truckAPI)
+async function fetchAllTrucks(){
+    await fetch(truckAPI)
     .then(res => res.json())
     .then(trucks => {
         trucks.forEach(truck => {
-            if(truck.longitude !== "0" && truck.latitude !== "0"){
-                filterTruck(truck)
+            if(truck.longitude !== "0" && truck.latitude !== "0" && truck.status === "APPROVED"){
+                getTruckDistance(truck)
             }
         })
     })
+    showTruckResults()
 }
 
-// get distance between user & truck 
-// filter based on default filter/user input
+// get distance between user & truck, store truck information
 
-function filterTruck(truck){
+function getTruckDistance(truck){
     let truckLocation = new google.maps.LatLng(truck.location.coordinates[1], truck.location.coordinates[0])
     let newUserLocation = new google.maps.LatLng(userLocation["lat"], userLocation["lng"])
     let distance = google.maps.geometry.spherical.computeDistanceBetween(truckLocation, newUserLocation);
-    console.log(distance)
+    truck.distanceFromUser = distance
+    if(distance <= 8000){
+        trucks['5'].push(truck)
+    } else if(distance <= 16000 && distance > 8000){
+        trucks['10'].push(truck)
+    } else if(distance <= 24000 && distance > 16000){
+        trucks['15'].push(truck)
+    }
 }
 
-function showTruckResult(truck){
-    let truckList = document.getElementById('truck-list')
+// sort trucks in object based on set filter 
+
+function showTruckResults(){
+    trucks[locationFilter].sort(compareTruckDistance)
+    console.log(trucks[locationFilter])
 }
+
+// compare truck distances
+
+function compareTruckDistance(truck1, truck2){
+    let comparison = 0 
+    if(truck1.distanceFromUser > truck2.distanceFromUser){
+        comparison = 1
+    } else if(truck1.distanceFromUser < truck2.distanceFromUser){
+        comparison = -1 
+    }
+    return comparison
+    console.log(comparison)
+}
+
+function showTruck(truck){
+    let truckList = document.getElementById('truck-list')
+    
+}
+
 
 
 
