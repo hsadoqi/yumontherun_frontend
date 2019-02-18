@@ -7,7 +7,6 @@ let trucks = []
 let results = 20
 let markers = []
 let map
-console.log(truckList)
 
 // on load, checks localStorage for address
 // default position: downtown San Francisco 
@@ -223,10 +222,12 @@ function displayTruckInfo(truckId){
     
     clickMarker(foundMarker)
 
-    truckInfo.innerHTML = `<h3>${foundTruck.applicant}</h3>
-    <p>${foundTruck.address}</p>
-    <a href="https://www.google.com/maps/search/?api=1&query=${foundTruck.location.coordinates[1]},${foundTruck.location.coordinates[0]}">Get Directions</a>
-    <p>${foundTruck.fooditems}</p>
+    truckInfo.innerHTML = `<div id="more-info">
+        <h3>${foundTruck.applicant}</h3>
+        <p>${foundTruck.address}</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=${foundTruck.location.coordinates[1]},${foundTruck.location.coordinates[0]}">Get Directions</a>
+        <p>${foundTruck.fooditems}</p>
+    </div>
     `
 
     window.scrollTo(0, document.body.scrollHeight)

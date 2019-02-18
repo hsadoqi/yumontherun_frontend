@@ -4,12 +4,16 @@ html, body{
     margin: 0;
     padding: 0;
     height:100%;
+    background-color:#e6f3ff;
 }
+
+
 
 /* styles for the header */
 
 .header{
     text-align: center;
+    box-shadow:0 0 10px 2px black;
 }
 /* added different font for header*/
 
@@ -79,7 +83,7 @@ html, body{
 
 /* styles to make input & button media responsive */
 
-@media only screen and (max-device-width: 812px) {
+@media only screen and (max-device-height: 414px) {
 
     #map-input input{
         height: 8vh !important;
@@ -122,47 +126,50 @@ html, body{
     background-size:100%;
 }
 
+/* media responsive design for results */
+
+@media only screen and (max-device-width: 750px) {
+    #results{
+        display:none !important;
+    }
+}
+
 /* styles for results container */
 
 #results{
-    border: 1px solid black;
     height: 500px;
     float:right;
     width:30%;
     margin-right:100px;
     margin-top:50px;
-    padding:0;
-    display:flex;
     left:64%;
     position:absolute;
     background-color: lightgrey;
     z-index:10;
     overflow:scroll;
+    box-shadow:0 0 20px 2px black;
 }
 
 /* styles to search food trucks */
 
 #search-food input{
-    float:right;
     width:30%;
-    margin-right:100px;
     margin-top:20px;
-    padding:0;
-    display:flex;
-    left:64%;
+    left:60%;
     position:absolute;
     z-index:10;
     height:30px;
     border: 1px solid black;
+    text-align:center;
 }
 
 
 /* styles for list of trucks */
 
 #truck-list{
-    background-color:white;
+    background-color:ivory;
     list-style:none;
-    padding: 0px;
+    padding: 0;
     position:absolute;
     margin:0;
 }
@@ -173,10 +180,15 @@ html, body{
 }
 
 .truck-item:hover{
-    background-color:lightgrey;
+    background-color:gainsboro;
 }
 
+/* styles for more truck info div */
 
-.footer{
-    background-color:lightgrey
+#more-info{
+    margin:50px;
+    padding:20px;
+    text-align:center;
+    box-shadow: 1.5px 1.5px 1.5px 1.5px black;
+    background-color:ivory
 }
