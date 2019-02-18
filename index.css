@@ -27,12 +27,14 @@ html, body{
     .header p{
         font-size: 1.5em !important;
     }
+
 }
 
 @media only screen and (min-device-width: 380px) and (max-device-width: 820px) {
     .header p{
         font-size: 1.75em !important;
     }
+
 }
 
 /* animation for header */
@@ -59,7 +61,6 @@ html, body{
     max-width: 12vh;
 }
 
-
 /* styles for main container */
 
 .map-results{
@@ -71,45 +72,51 @@ html, body{
 /* styles for map itself */
 
 #map{
-    height:600px;
+    height:90vh;
     width:100%;
     background-color:grey;
-    float:left;
-    /* margin:10px; */
+}
 
+/* styles to make input & button media responsive */
+
+@media only screen and (max-device-width: 812px) {
+
+    #map-input input{
+        height: 8vh !important;
+        width: 40vh !important;
+    }
+
+    #find-btn{
+        height: 9vh !important;
+        width: 9vh !important;
+    }
 }
 
 /* styles for search bar for address */
 
 #map-input{
-    width:50%;
-    height:40px;
-    position:absolute;
-    z-index:10;
-    top:4%;
-    left:20%;
+    border: 1px solid black;
+    z-index: 10;
+    position: absolute;
+    display:flex;
+    bottom: 10%;
+    left: 10%;
+    background-color:white;
+    flex-wrap:wrap;
 }
 
 #map-input input{
-    height:40px;
-    width:65%;
-    border: 1px solid black;
-    text-align:center;
+    height: 4vh;
+    width: 25vh;
+    text-align: center;
+    padding: 0 !important;
 }
 
 /* styles for button to geolocalize user */
 
-button{
-    width:10%;
-    height:40px;
-    border: 1px solid black;
-}
-
 #find-btn{
-    position:absolute;
-    left: 3%;
-    bottom: 10%;
-    width:40px;
+    width:5vh;
+    height:5vh;
     overflow:hidden;
     background-image: url('./media/geolocalize.png');
     background-size:100%;
