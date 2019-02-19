@@ -42,7 +42,9 @@ document.addEventListener('click', (e) => {
     } else if(e.target.className === 'truck-item'){
         const truckId = e.target.dataset.id
         displayTruckInfo(truckId)
-    } 
+    } else if(e.target.tagName === 'A'){
+        window.open(e.target.href)
+    }
 })
 
 // handles submit events
