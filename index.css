@@ -170,7 +170,7 @@ html, body{
 /* styles for list of trucks */
 
 #truck-list{
-    background-color:ivory;
+    background-color:#e6f3ff;
     list-style:none;
     padding: 0;
     position:absolute;
@@ -193,5 +193,5 @@ html, body{
     padding:20px;
     text-align:center;
     box-shadow: 1.5px 1.5px 1.5px 1.5px black;
-    background-color:ivory
+    background-color:#e6f3ff;
 }
