@@ -87,7 +87,7 @@ function loadMap(userLocation){
     results = 20
 
     map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: userLocation});
-    createMarker(userLocation, {title: 'Your Location', id: null, url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"})
+    createMarker(userLocation, {title: 'Your Location', id: null, url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", scaledSize: new google.maps.Size(50, 50)})
 
     fetchAllTrucks()
 }
@@ -95,7 +95,7 @@ function loadMap(userLocation){
 // creates map marker
 
 function createMarker(position, options){
-    let marker = new google.maps.Marker({map: map, position: position, title: options['title'], id: options['id'], icon: { url: options['url']}})
+    let marker = new google.maps.Marker({map: map, position: position, title: options['title'], id: options['id'], icon: { url: options['url'], scaledSize: options['scaledSize']}})
 
     marker.addListener('click', () => {
         if(marker.id !== null){
@@ -204,7 +204,7 @@ function compareTruckDistance(truck1, truck2){
 // display each truck's info on the results div
 
 function showTruck(truck){
-    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]}, {title: truck.applicant, id: truck.objectid, url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"})
+    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]}, {title: truck.applicant, id: truck.objectid, url: "http://foodtruckwhere.com/graphics/default/logo.png", scaledSize: new google.maps.Size(40, 50)})
 
     return `<li data-id=${truck.objectid} class="truck-item">
     ${truck.applicant}<br><br>
