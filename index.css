@@ -99,7 +99,7 @@ html, body{
 /* styles for search bar for address */
 
 #map-input{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     z-index: 10;
     position: absolute;
     display:flex;
@@ -114,6 +114,8 @@ html, body{
     width: 25vh;
     text-align: center;
     padding: 0 !important;
+    border: 0 !important;
+    margin-top:0.5vh;
 }
 
 /* styles for button to geolocalize user */
