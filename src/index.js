@@ -87,7 +87,7 @@ function loadMap(userLocation){
     results = 20
 
     map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: userLocation});
-    createMarker(userLocation, {title: 'Your Location', id: null, url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", scaledSize: new google.maps.Size(50, 50)})
+    createMarker(userLocation, {title: 'Your Location', id: null, url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", scaledSize: new google.maps.Size(50, 50)})
 
     fetchAllTrucks()
 }
@@ -133,8 +133,10 @@ function fetchAllTrucks(){
             trucks.sort(compareTruckDistance)
             showTruckResults()
         } else {
-            truckList.innerHTML = 'No results'
-            alert('there are no trucks nearby, please choose a different address')
+            truckList.style.backgroundColor = 'lightgray'
+            truckList.style.padding = '5vh'
+            truckList.innerHTML = 'No Results'
+            alert('There are no trucks nearby, please try again')
         }
     })
 }
@@ -153,6 +155,7 @@ function getTruckDistance(truck){
 // sort trucks in object & render info for nearby trucks
 
 function showTruckResults(){
+    truckList.style = ''
     truckList.innerHTML = ''
 
     for(let i = 0; i <= results; i++){
@@ -204,7 +207,7 @@ function compareTruckDistance(truck1, truck2){
 // display each truck's info on the results div
 
 function showTruck(truck){
-    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]}, {title: truck.applicant, id: truck.objectid, url: "http://foodtruckwhere.com/graphics/default/logo.png", scaledSize: new google.maps.Size(40, 50)})
+    createMarker({lat: truck.location.coordinates[1], lng: truck.location.coordinates[0]}, {title: truck.applicant, id: truck.objectid, url: "http://foodtruckwhere.com/graphics/default/logo.png", scaledSize: new google.maps.Size(30, 40)})
 
     return `<li data-id=${truck.objectid} class="truck-item">
     ${truck.applicant}<br><br>
